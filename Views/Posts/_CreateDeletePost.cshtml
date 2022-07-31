@@ -1,0 +1,15 @@
+@model cbsStudents.Models.Entities.Post
+
+
+<div class="form-group">
+    <label asp-for="Title" class="control-label"></label>
+    <input asp-for="Title" disabled class="form-control" />
+</div>
+<div class="form-group">
+    <label asp-for="Text" class="control-label"></label>
+    <textarea asp-for="Text" disabled class="form-control"></textarea>
+</div>
+<div class="form-group">
+    <br>
+    <input type="submit" value="Delete" class="btn btn-danger" />
+</div>

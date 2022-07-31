@@ -1,0 +1,28 @@
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+<div class="toast-container">
+@foreach (var comment in Model.Comments)
+{
+
+<div class="toast show" aria-live="assertive" aria-atomic="true">
+  <div class="toast-header">
+       @if (@UserManager.GetUserName(User) == @comment.User.UserName){ 
+    <strong class="me-auto1"> @comment.User.Email</strong> }else{
+    <strong class="me-auto"> @comment.User.Email</strong>  
+    }
+    <small>@comment.TimeStamp</small>
+    @if (@UserManager.GetUserName(User) == @comment.User.UserName){
+    <a asp-action="Delete" asp-controller="Comments" asp-route-id="@comment.CommentId"><button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close">
+      <span aria-hidden="true"></span>
+    </button></a>}
+  </div>
+  <div class="toast-body">
+    @comment.Text
+    @* <br>@if (@UserManager.GetUserName(User) == @comment.User.UserName){
+      <a asp-action="Edit" asp-controller="Comments" asp-route-id="@comment.CommentId">Edit</a>
+      } *@
+  </div>
+</div>
+}
+</div><br />

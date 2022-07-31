@@ -1,0 +1,52 @@
+@model cbsStudents.Models.Entities.PostIndexVm
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<partial name="_Notification"/>
+
+ <div class="d-flex justify-content-between">    
+    <h4>Posts</h4>
+    <a class="btn btn-primary" asp-action="create">New Post</a>
+</div>
+
+
+
+<form asp-controller="Posts" asp-action="Index" method="get">
+    <p>
+        Title: <input type="text" name="SearchString" value=@Model.SearchString />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<p>@ViewBag.Thanks</p>
+
+                    @* Cards for posts *@
+
+<div class="card-group">
+ @foreach (var post in Model.Posts)
+    {
+<div class="card border-primary mb-3" style="max-width: 20rem;">
+        <div class="card-header">@Html.DisplayFor(x => post.User.UserName)</div>   
+  <div class="card-body">
+    <h4 class="card-title">@Html.DisplayFor(x => post.Title)</h4>
+    <p class="card-text">@Html.DisplayFor(x => post.Text) <br><br><br></p>
+    </div>
+    <div class="bottom">
+        <a class="btn btn-primary btn-sm" asp-action="View" asp-route-id="@post.Id">View</a>
+
+            @try{
+            @if (@UserManager.GetUserName(User) == @post.User.UserName){    
+            <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@post.Id">Edit</a>
+            <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@post.Id">Delete</a>
+            }}catch{
+            <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@post.Id">Edit</a>
+            <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@post.Id">Delete</a>  
+            }
+    </div>
+</div>
+}
+
+</div>
